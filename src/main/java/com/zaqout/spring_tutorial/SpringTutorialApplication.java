@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller // we can do this
 public class SpringTutorialApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringTutorialApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringTutorialApplication.class, args);
+    }
 
     @RequestMapping("/")
     public String index() {
@@ -23,5 +23,4 @@ public class SpringTutorialApplication {
     public ResponseEntity<String> hello() {
         return ResponseEntity.status(200).body("Hello / from " + this.getClass().getName());
     }
-
 }
