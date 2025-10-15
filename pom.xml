@@ -3,34 +3,35 @@
 <!-- POM = Project Object Model XML
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <!-- Parent
      - Inherits pre-configured defaults from Spring Boot.
      - Simplifies dependency and plugin version management.-->
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId> <!-- instead of specifying version for each starter dependency -->
-		<version>3.5.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent
+        </artifactId> <!-- instead of specifying version for each starter dependency -->
+        <version>3.5.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <!-- Project Coordinates   -->
-	<groupId>com.zaqout</groupId>
-	<artifactId>spring-tutorial</artifactId>
-	<version>0.0.1-SNAPSHOT</version> <!--SNAPSHOT = under development-->
+    <groupId>com.zaqout</groupId>
+    <artifactId>spring-tutorial</artifactId>
+    <version>0.0.1-SNAPSHOT</version> <!--SNAPSHOT = under development-->
 
-	<name>spring-tutorial</name>
-	<description>Demo project for Spring Boot</description>
-	<url>https://mo-services.com/api/v1/</url>
-	<licenses>
+    <name>spring-tutorial</name>
+    <description>Demo project for Spring Boot</description>
+    <url>https://mo-services.com/api/v1/</url>
+    <licenses>
         <license>
             <name>MIT</name>
         </license>
-	</licenses>
-	<developers>
-		<developer>
+    </licenses>
+    <developers>
+        <developer>
             <organization>opensrc</organization>
             <name>Mohammed</name>
             <email>mo.zaqout@gmail.com</email>
@@ -43,31 +44,35 @@
 
 
     <!---->
-	<properties>
-		<java.version>21</java.version>
-	</properties>
+    <properties>
+        <java.version>21</java.version>
+    </properties>
 
     <!---->
-	<dependencies>
+    <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
-	<build>
+    <build>
         <!-- Plugins used during the build process -->
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
