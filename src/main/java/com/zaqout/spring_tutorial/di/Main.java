@@ -10,6 +10,6 @@ public class Main {
     public static void main(String[] args) {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(Main.class, args);
         OrderService orderService = applicationContext.getBeanFactory().getBean(OrderService.class);
-//        orderService.pay(55.33);
+        orderService.pay(55.33);
     }
 }
