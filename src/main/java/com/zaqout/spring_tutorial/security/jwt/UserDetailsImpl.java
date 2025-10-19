@@ -20,9 +20,7 @@ public class UserDetailsImpl implements UserDetailsService {
 
         // but here we use in memory users
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        // TODO: set claims to token, don't load from db everytime
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         String encoded = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123"); // should be hashed in DB
         return new User(username, encoded, authorities);

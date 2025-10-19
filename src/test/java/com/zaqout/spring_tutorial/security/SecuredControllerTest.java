@@ -2,8 +2,8 @@ package com.zaqout.spring_tutorial.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest
-@Import(SecurityConfig.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class SecuredControllerTest {
 
     @Autowired
@@ -20,18 +20,19 @@ class SecuredControllerTest {
 
     @Test
     void springSecurityWorks() throws Exception {
-        mvc.perform(get("/")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/hello")).andExpect(status().isForbidden());
     }
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(roles = "ADMIN")
     void allowAdminAccess() throws Exception {
-        mvc.perform(get("/security/hello")).andExpect(status().isOk());
+        mvc.perform(get("/hello")).andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username = "cat", password = "xx", roles = {"USER"})
+    @WithMockUser(username = "user", password = "pass", roles = "USER")
     void forbidUserAccessToAdminEndpoint() throws Exception {
-        mvc.perform(get("/security/hello")).andExpect(status().isForbidden());
+        mvc.perform(get("/hello")).andExpect(status().isForbidden());
     }
+
 }
