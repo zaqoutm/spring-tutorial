@@ -1,5 +1,6 @@
-package com.zaqout.spring_tutorial.security;
+package com.zaqout.spring_tutorial.controllers;
 
+import com.zaqout.spring_tutorial.security.Role;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

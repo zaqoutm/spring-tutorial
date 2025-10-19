@@ -4,10 +4,9 @@ import com.zaqout.spring_tutorial.SpringTutorialApplication;
 import com.zaqout.spring_tutorial.aop.services.ReportService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class App implements CommandLineRunner {
     private final ReportService reportService;
     static ConfigurableApplicationContext context;

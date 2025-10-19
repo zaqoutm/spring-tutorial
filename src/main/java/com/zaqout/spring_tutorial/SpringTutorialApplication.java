@@ -14,12 +14,7 @@ public class SpringTutorialApplication {
         SpringApplication.run(SpringTutorialApplication.class, args);
     }
 
-    @RequestMapping("/")
-    public String index() {
-        return "/index.html";
-    }
-
-    @RequestMapping("/hello")
+    @RequestMapping("/home/hello")
     public ResponseEntity<String> hello() {
         return ResponseEntity.status(200).body("Hello / from " + this.getClass().getName());
     }

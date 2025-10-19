@@ -15,12 +15,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(jsr250Enabled = true)
-public class SecurityConfig {
+public class ConfigurationJWT {
 
     @Autowired
     JwtAuthFilter filter;
 
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+    public ConfigurationJWT(JwtAuthFilter jwtAuthFilter) {
         this.filter = jwtAuthFilter;
     }
 
@@ -29,6 +29,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        // statics
+                        .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 )

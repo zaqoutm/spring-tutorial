@@ -1,4 +1,4 @@
-package com.zaqout.spring_tutorial;
+package com.zaqout.spring_tutorial.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
