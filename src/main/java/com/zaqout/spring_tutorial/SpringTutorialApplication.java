@@ -14,7 +14,7 @@ public class SpringTutorialApplication {
         SpringApplication.run(SpringTutorialApplication.class, args);
     }
 
-    @RequestMapping("/home/hello")
+    @RequestMapping("/home")
     public ResponseEntity<String> hello() {
         return ResponseEntity.status(200).body("Hello / from " + this.getClass().getName());
     }
