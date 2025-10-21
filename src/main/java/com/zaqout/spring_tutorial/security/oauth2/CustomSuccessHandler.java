@@ -1,52 +1,56 @@
 package com.zaqout.spring_tutorial.security.oauth2;
 
+import com.zaqout.spring_tutorial.security.AppUser;
+import com.zaqout.spring_tutorial.security.CustomUserDetails;
+import com.zaqout.spring_tutorial.security.jwt.JwtService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 
 @Component
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
+    private final JwtService jwtService;
+    private final Logger logger = LoggerFactory.getLogger(CustomSuccessHandler.class);
+
+    public CustomSuccessHandler(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        System.out.println(authentication.getPrincipal());
-//        System.out.println("Loading OAuth user!!");
+        logger.debug("google success auth");
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        OAuth2User oAuth2User = (OAuth2User) context.getAuthentication().getPrincipal();
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        String name = oAuth2User.getName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
+        String email = (String) attributes.get("email");
+        String picture = (String) attributes.get("picture");
+        String username = (String) attributes.get("given_name");
 
-        System.out.println(oAuth2User.getName()); // store in user
-        System.out.println(attributes.get("email"));
-        System.out.println(attributes.get("picture"));
-        System.out.println(attributes.get("email_verified"));
-        System.out.println(attributes.get("given_name"));
-        System.out.println(attributes.get("family_name"));
-        System.out.println(attributes.get("name"));
+        AppUser appUser = new AppUser();
+        appUser
+                .setUsername(username)
+                .setOauth("google")
+                .setEmail(email)
+                .setRoles("ROLE_USER")
+                .setPictureUrl(picture);
+        CustomUserDetails customUserDetails = new CustomUserDetails(appUser);
 
-        ////////// create user
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        var x = new UsernamePasswordAuthenticationToken(context.getAuthentication().getPrincipal(), null, authorities);
-        context.setAuthentication(x);
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities()));
 
-        // do things here
-        // register user, create jwt ..etc
-
-        response.sendRedirect("/profile/auth");
+        String token = jwtService.generateToken(customUserDetails);
+        response.getWriter().write(token);
     }
+
 }
