@@ -3,11 +3,13 @@ package com.zaqout.spring_tutorial;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 @Controller // we can do this
+@EnableScheduling
 public class SpringTutorialApplication {
 
     public static void main(String[] args) {

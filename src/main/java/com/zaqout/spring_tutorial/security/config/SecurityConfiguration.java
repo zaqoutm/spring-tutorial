@@ -1,27 +1,25 @@
-package com.zaqout.spring_tutorial.security;
+package com.zaqout.spring_tutorial.security.config;
 
 import com.zaqout.spring_tutorial.security.jwt.JwtAuthFilter;
-import com.zaqout.spring_tutorial.security.oauth2.CustomSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(jsr250Enabled = true)
-public class ConfigurationJWT {
+public class SecurityConfiguration {
 
-    JwtAuthFilter filter;
-    CustomSuccessHandler customSuccessHandler;
+    private final JwtAuthFilter filter;
 
-    public ConfigurationJWT(JwtAuthFilter filter, CustomSuccessHandler customSuccessHandler) {
+    public SecurityConfiguration(JwtAuthFilter filter) {
         this.filter = filter;
-        this.customSuccessHandler = customSuccessHandler;
     }
 
     @Bean
@@ -31,10 +29,17 @@ public class ConfigurationJWT {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/index.html").permitAll()
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(oauth -> oauth.successHandler(customSuccessHandler));
+
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
+        // enable sessions, it's good with MVC
+//                .oauth2Login(oauth -> oauth.successHandler(customSuccessHandler));
+
+
         return http.build();
     }
 

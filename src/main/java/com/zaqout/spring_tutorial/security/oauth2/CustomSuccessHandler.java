@@ -13,12 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
 
-@Component
+//@Component
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final Logger logger = LoggerFactory.getLogger(CustomSuccessHandler.class);
@@ -31,7 +30,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         logger.debug("google success auth");
 
+        System.out.println(authentication);
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+
         String name = oAuth2User.getName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String email = (String) attributes.get("email");
