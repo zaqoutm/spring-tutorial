@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/index.html").permitAll()
                         .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/actuator/**").hasAnyRole("ANONYMOUS")
+
                         .anyRequest().authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
 

@@ -18,7 +18,7 @@ class SecuredControllerTest {
     @Autowired
     MockMvc mvc;
 
-    //    @Test
+    @Test
     void springSecurityWorks() throws Exception {
         mvc.perform(get("/hello")).andExpect(status().isForbidden());
     }
